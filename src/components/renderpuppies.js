@@ -25,6 +25,12 @@ const RenderPuppies =  () => {
     fetchPuppies();
   }, []);
 
+  const deleteFunction = () => {
+    console.log('delete');
+  }
+  const detailFunction = () => {
+    console.log('details');
+  }
   if (!puppies || !puppies.length) {
     return (
     <h1>Loading puppies..</h1>
@@ -44,6 +50,8 @@ const RenderPuppies =  () => {
                               <p className="pup-number">{pup.id}</p>
                             </div>
                           <img src={pup.imageUrl} />
+                          <button className="detail-button" value="" data-id={pup.id} onClick={detailFunction}>See details</button>
+                          <button className="delete-button" data-id={pup.id} onClick={deleteFunction}>Delete</button>
                           </div>
 
                 })
