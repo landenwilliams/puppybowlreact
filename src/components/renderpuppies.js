@@ -27,9 +27,11 @@ const RenderPuppies =  () => {
     fetchPuppies();
   }, []);
 
-const renderAllPuppies = () => {
 
-  const playerContainer = document.getElementById('playerContainer');
+
+const renderAllPuppies = () => {
+  
+  const playerContainer = document.getElementById('app');
   let playerContainerHTML = '';
 
   for( let i = 0; i <= puppies.length - 1; i++){
@@ -50,15 +52,16 @@ const renderAllPuppies = () => {
         
   }
   playerContainer.innerHTML = playerContainerHTML;
-}
+  
 
+}
   if (!puppies || !puppies.length) {
     return (
     <h1>Loading puppies..</h1>
   )  
   } else {
     return (
-    <div id="playerContainer">{renderAllPuppies()}</div>
+    <>{renderAllPuppies()}</>
     )
   }
 }

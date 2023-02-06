@@ -1,4 +1,4 @@
-#all-players-container {
+#app {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
