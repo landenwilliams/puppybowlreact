@@ -6,3 +6,5 @@ const appElement = document.getElementById("app")
 const root = createRoot(appElement)
 
 root.render(<RenderPuppies />)
+
+export default root;
