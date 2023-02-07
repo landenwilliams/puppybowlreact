@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import root from '../index.js';
+import RenderHeader from "./renderheader.js";
 
 const RenderPuppies =  () => {
   let puppiesLoaded = false;
@@ -50,11 +51,12 @@ const RenderPuppies =  () => {
   const goBackFunction = () => {
 
     console.log("sup");
-    root.render (<div id='playerContainer'>{
+    root.render (<><RenderHeader/><div id='playerContainer'>{
 
       puppies.map((pup,index) => {
         
         return  <React.Fragment key={index} >
+                
                   {visible && ( 
                     <div key={index} id={pup.id} className="single-player-card">
                       <div className="header-info">
@@ -71,7 +73,7 @@ const RenderPuppies =  () => {
       }
       
     )}
-    </div>)
+    </div></>)
   }
 
   const deleteFunction = async (playerId) => {
