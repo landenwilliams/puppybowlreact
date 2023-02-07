@@ -29,15 +29,13 @@ const RenderPuppies =  () => {
     fetchPuppies();
   }, []);
 
-  const deleteFunction = () => {
-    console.log('delete');
-  }
+  
   const detailFunction = (pup) => {
 
     setVisible((prev) => !prev);
 
     root.render( 
-              <>{visible && ( <div className="single-player-view" >
+              <><div className="single-player-view" >
               <div className="header-info">
                 <p className="pup-title">{pup.name}</p>
                 <p className="pup-number">{pup.id}</p>
@@ -46,18 +44,19 @@ const RenderPuppies =  () => {
                 <p>Breed: {pup.breed}</p>
                 <img src={pup.imageUrl} />
               <button id="see-all" onClick={goBackFunction}>Back to all players</button>
-            </div>)}</>)
+            </div></>)
     
   }
 
   const goBackFunction = () => {
-
+    
+    console.log("sup");
     root.render (<div id='playerContainer'>{
 
       puppies.map((pup,index) => {
         
         return  <React.Fragment key={index} >
-                  
+                  {visible && ( 
                     <div key={index} id={pup.id} className="single-player-card">
                       <div className="header-info">
                         <p className="pup-title">{pup.name}</p>
@@ -65,9 +64,9 @@ const RenderPuppies =  () => {
                       </div>
                       <img src={pup.imageUrl} />
                       <button className="detail-button" id={pup.id} value="" onClick={() => detailFunction(pup)}>See details</button> 
-                      <button className="delete-button" data-id={pup.id} onClick={deleteFunction}>Delete</button>
+                      <button className="delete-button" data-id={pup.id} onClick={() => deleteFunction(pup.id)}>Delete</button>
                     </div>
-                  
+                  )}
                 </React.Fragment>
               
       }
@@ -75,6 +74,29 @@ const RenderPuppies =  () => {
     )}
     </div>)
   }
+
+  const deleteFunction = async (playerId) => {
+    // setVisible((prev) => !prev);
+    
+    try {
+     const response = await fetch(`https://fsa-puppy-bowl.herokuapp.com/api/2211-ftb-et-web-am//players/${playerId}`, {
+       method: 'DELETE',
+     });
+     const result = await response.json();
+     if (result.error) throw result.error;
+     return 
+    } catch (err) {
+     console.error(
+       `Whoops, trouble removing player #${playerId} from the roster!`,
+       err
+     );
+    }
+    goBackFunction();
+
+
+
+    
+  };
 
   if (!puppies || !puppies.length) {
     return (
@@ -97,7 +119,7 @@ const RenderPuppies =  () => {
                                 </div>
                                 <img src={pup.imageUrl} />
                                 <button className="detail-button" id={pup.id} value="" onClick={() => detailFunction(pup)}>See details</button> 
-                                <button className="delete-button" data-id={pup.id} onClick={deleteFunction}>Delete</button>
+                                <button className="delete-button" data-id={pup.id} onClick={() => deleteFunction(pup.id)}>Delete</button>
                               </div>
                             )}
                           </React.Fragment>
