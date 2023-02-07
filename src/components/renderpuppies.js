@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import root from '../index.js';
-import { createRoot } from 'react-dom/client'
 
 const RenderPuppies =  () => {
   let puppiesLoaded = false;
@@ -49,7 +48,7 @@ const RenderPuppies =  () => {
   }
 
   const goBackFunction = () => {
-    
+
     console.log("sup");
     root.render (<div id='playerContainer'>{
 
@@ -76,7 +75,7 @@ const RenderPuppies =  () => {
   }
 
   const deleteFunction = async (playerId) => {
-    // setVisible((prev) => !prev);
+    setVisible((prev) => !prev);
     
     try {
      const response = await fetch(`https://fsa-puppy-bowl.herokuapp.com/api/2211-ftb-et-web-am//players/${playerId}`, {
@@ -91,7 +90,7 @@ const RenderPuppies =  () => {
        err
      );
     }
-    goBackFunction();
+    root.render(<>{goBackFunction}</>);
 
 
 
@@ -104,7 +103,7 @@ const RenderPuppies =  () => {
   )  
   } else {    
          
-          return (
+      return (
             
             <div id='playerContainer'>
               {
@@ -122,15 +121,11 @@ const RenderPuppies =  () => {
                                 <button className="delete-button" data-id={pup.id} onClick={() => deleteFunction(pup.id)}>Delete</button>
                               </div>
                             )}
-                          </React.Fragment>
-                        
-                }
-                
-              )}
-                
-              
+                          </React.Fragment>    
+                }               
+              )}            
             </div>         
-          )       
+        )       
     } 
 } 
 
