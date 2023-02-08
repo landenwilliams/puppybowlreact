@@ -6,6 +6,7 @@ const RenderPuppies =  () => {
   let puppiesLoaded = false;
   const [puppies, setPuppies] = useState([]);
   const [visible, setVisible] = useState(true);
+  
 
   
   useEffect(() => {
@@ -77,7 +78,7 @@ const RenderPuppies =  () => {
   }
 
   const deleteFunction = async (playerId) => {
-    setVisible((prev) => !prev);
+    // setVisible((prev) => !prev);
     
     try {
      const response = await fetch(`https://fsa-puppy-bowl.herokuapp.com/api/2211-ftb-et-web-am//players/${playerId}`, {
@@ -85,6 +86,47 @@ const RenderPuppies =  () => {
      });
      const result = await response.json();
      if (result.error) throw result.error;
+     console.log('delete');
+
+        try {
+          const response = await fetch(
+            "https://fsa-puppy-bowl.herokuapp.com/api/2211-ftb-et-web-am/players"
+          );
+          const result = await response.json();
+          const puppies = result.data.players;
+          
+          console.log("puppies set");
+          setPuppies(puppies);
+          
+  
+        } catch (error) {
+          console.log("Ruh Roh!");
+          // console.log(error);
+        }
+        setVisible((prev) => !prev);
+     root.render (<><RenderHeader/><div id='playerContainer'>{
+
+      puppies.map((pup,index) => {
+        if(pup.id != playerId){
+        return  <React.Fragment key={index} >
+                
+                  {visible && ( 
+                    <div key={index} id={pup.id} className="single-player-card">
+                      <div className="header-info">
+                        <p className="pup-title">{pup.name}</p>
+                        <p className="pup-number">{pup.id}</p>
+                      </div>
+                      <img src={pup.imageUrl} />
+                      <button className="detail-button" id={pup.id} value="" onClick={() => detailFunction(pup)}>See details</button> 
+                      <button className="delete-button" data-id={pup.id} onClick={() => deleteFunction(pup.id)}>Delete</button>
+                    </div>
+                  )}
+                </React.Fragment>
+        }
+      }
+      
+    )}
+    </div></>)
      return 
     } catch (err) {
      console.error(
@@ -92,7 +134,7 @@ const RenderPuppies =  () => {
        err
      );
     }
-    root.render(<>{goBackFunction}</>);
+    
 
 
 
@@ -101,7 +143,7 @@ const RenderPuppies =  () => {
 
   if (!puppies || !puppies.length) {
     return (
-    <h1>Loading puppies..</h1>
+    <h1>Loading puppies?!?</h1>
   )  
   } else {    
          
@@ -132,3 +174,5 @@ const RenderPuppies =  () => {
 } 
 
 export default RenderPuppies;
+
+
